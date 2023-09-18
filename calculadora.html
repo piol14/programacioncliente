@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <style>
+   .calculadora{
+    display:block;
+    margin:0 auto;
+    padding:20px;
+    background-color:#468cdc;
+    width:340px;
+    height:500px;
+    border-radius: 25px;
+}
+.calculadora td button{
+    display:block;
+    width:70px;
+    height: 70px;
+    font-size: 25px;
+}
+
+#resultado{
+    display:block;
+    text-align: center;
+    font-size: 40px;
+    margin-bottom: 50px;
+    width:300px;
+    height: 100px;
+    line-height: 100px;
+    background-color:#fff;
+    border-radius: 25px;
+    overflow-y: scroll;
+}
+   </style>
+    <title>Calculadora</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            let numero1 = '';
+            let simbolo = '';
+            let numero2 = '';
+            let numeroselec = true;
+
+            $(".numero").click(function () {
+                
+                    $("#resultado").text(numero2);
+                
+                   
+                
+                let numero = $(this).text();
+                if (numeroselec) {
+                    numero1 += numero;
+                    $("#resultado").text(numero1 + simbolo + numero2);
+                } else {
+                    numero2 += numero;
+                    $("#resultado").text(numero1 + simbolo + numero2);
+                }
+            });
+
+            $(".simbolo").click(function () {
+                simbolo = $(this).text();
+                numeroselec = false;
+                $("#resultado").text(numero1 + simbolo + numero2);
+            });
+
+            $("#calcular").click(function () {
+                if (numero1 !== '' && numero2 !== '') {
+                    const num1 = parseFloat(numero1);
+                    const num2 = parseFloat(numero2);
+                    let resultado;
+                    switch (simbolo) {
+                        case '+':
+                            resultado = num1 + num2;
+                            break;
+                        case '-':
+                            resultado = num1 - num2;
+                            break;
+                        case '*':
+                            resultado = num1 * num2;
+                            break;
+                        case '/':
+                            resultado = num1 / num2;
+                            break;
+                    }
+                    $("#resultado").text(resultado);
+                    numero1 = resultado.toString();
+                    numero2 = '';
+                    numeroselec = true;
+                    simbolo = '';
+                }
+            });
+            $("#reset").click(function () {
+                numero1='';
+                numero2='';
+                simbolo = '';
+                $("#resultado").text(numero1);
+            })
+        });
+    </script>
+</head>
+<body>
+   
+   
+    <table class="calculadora">
+        <tr>
+            <td colspan="4"><span id="resultado"></span></td>
+        </tr>
+        <tr>
+        <tr>
+
+            <td><button class="numero">7</button></td><td><button class="numero">8</button></td><td><button class="numero">9</button></td><td><button class="simbolo">/</button></td>
+        </tr>
+        <tr>
+            <td><button class="numero">4</button></td><td><button class="numero">5</button></td><td><button class="numero">6</button></td><td><button class="simbolo">*</button></td>
+        </tr>
+        <tr>
+            <td><button class="numero">1</button></td><td><button class="numero">2</button></td><td><button class="numero">3</button></td><td><button class="simbolo">-</button></td>
+        </tr>
+        <tr>
+            <td><button id="calcular">=</button></td><td><button id="reset">C</button></td><td><button class="numero">0</button></td><td><button class="simbolo">+</button></td>
+        </tr>
+    </table>
+</body>
+</html>
